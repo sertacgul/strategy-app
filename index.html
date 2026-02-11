@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StrategyThrust - Executive Intelligence</title>
+
+  <!-- CORE REACT STACK -->
+  <script crossorigin="anonymous" src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin="anonymous" src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script crossorigin="anonymous" src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- STYLING -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: white; overflow-x: hidden; }
+    .font-display { font-family: 'Playfair Display', serif; }
+    .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .glass-panel { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); }
+    .aurora-bg { background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0f172a 100%); min-height: 100vh; }
+    .fade-in { animation: fadeIn 0.8s ease-out forwards; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); border-radius: 4px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+
+    .intro-screen { position: fixed; inset: 0; z-index: 100; background: #020617; display: flex; align-items: center; justify-content: center; }
+    .intro-fade-out { animation: fadeOut 1s ease-in-out forwards; pointer-events: none; }
+    @keyframes fadeOut { 0% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+    .loader { border: 4px solid rgba(255, 255, 255, 0.1); border-radius: 50%; border-top: 4px solid #6366f1; width: 40px; height: 40px; animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* Chatbot dock */
+    .chat-dock { position: fixed; right: 18px; bottom: 18px; z-index: 9999; }
+    .chat-bubble { width: 56px; height: 56px; border-radius: 18px; display:flex; align-items:center; justify-content:center; cursor:pointer;
+      background: rgba(79, 70, 229, 0.92); border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 16px 40px rgba(0,0,0,0.45); }
+    .chat-panel { width: 360px; height: 480px; border-radius: 18px; overflow:hidden;
+      background: rgba(2, 6, 23, 0.92); border: 1px solid rgba(255,255,255,0.14); box-shadow: 0 18px 60px rgba(0,0,0,0.55); }
+    .chat-header { padding: 12px 14px; display:flex; align-items:center; justify-content:space-between; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .chat-body { padding: 12px; height: 360px; overflow:auto; }
+    .chat-input { padding: 10px; border-top: 1px solid rgba(255,255,255,0.08); display:flex; gap: 8px; }
+    .msg { padding: 10px 12px; border-radius: 14px; margin-bottom: 10px; font-size: 12px; line-height: 1.35; }
+    .msg-user { background: rgba(99,102,241,0.18); border: 1px solid rgba(99,102,241,0.25); }
+    .msg-bot { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); }
+
+    /* Small icon button */
+    .icon-btn { width: 38px; height: 38px; border-radius: 12px; display:flex; align-items:center; justify-content:center;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); }
+    .icon-btn:hover { background: rgba(255,255,255,0.10); }
+  </style>
+</head>
+
+<body>
+  <div id="app-error" style="display:none; padding: 20px; color: #ff6b6b; background: #2d1b1b; text-align: center; position: fixed; top: 0; left: 0; width: 100%; z-index: 99999;">
+    <h2 style="font-size: 24px; margin-bottom: 10px;">System Error</h2>
+    <p id="error-msg">Initializing...</p>
+    <button onclick="location.reload()" style="margin-top:10px; padding: 8px 16px; background: #ff4444; color: white; border: none; cursor: pointer;">Reload</button>
+  </div>
+
+  <div id="root"></div>
+
+  <script>
+    window.onerror = function(msg, url, line, col, error) {
+      if (msg && String(msg).toLowerCase().includes('resizeobserver')) return true;
+      document.getElementById('app-error').style.display = 'block';
+      document.getElementById('error-msg').innerText = (msg || "Unknown Error") + " (Line: " + (line || "?") + ")";
+      return false;
+    };
+  </script>
+
+  <!-- Config -->
+  <script src="/config.js"></script>
+
+  <!-- Main App (JSX) -->
+  <script type="text/babel" src="/app.jsx"></script>
+</body>
+</html>
